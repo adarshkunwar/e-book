@@ -9,8 +9,8 @@ type Props = {
 const CardWrapper = ({ product }: Props) => {
   return (
     <div className="grid grid-cols-4 gap-4">
-      {(product as TBook[]).map((product) => (
-        <SingleCardItem product={product} />
+      {(product as TBook[]).map((product, index) => (
+        <SingleCardItem product={product} key={index} />
       ))}
     </div>
   );
