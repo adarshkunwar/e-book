@@ -1,9 +1,8 @@
-import { books } from "@/data/booksCollection";
+import books from "@/data/booksCollection.json";
 
-const mainData = books(1000);
 
 export async function GET() {
-	return Response.json(mainData)
+	return Response.json(books)
 }
 
 
