@@ -19,10 +19,12 @@ export default function RootLayout({
     <html lang="en">
       <body className={inter.className}>
         <div className="flex h-screen divide-x">
-          <div className="px-4 py-4">
+          <div className="px-4 py-4 ">
             <Sidebar />
           </div>
-          <div className="col-span-11 h-screen overflow-scroll">{children}</div>
+          <div className="w-full h-full overflow-scroll overflow-x-hidden px-4 py-10">
+            {children}
+          </div>
         </div>
       </body>
     </html>

@@ -3,13 +3,12 @@ import CardWrapper from "@/components/shared-components/card-wrapper";
 import data from "@/data/booksCollection.json";
 
 const Page = async () => {
-  // const response = await fetch("/api/books");
-  // const data = await response.json();
-
   return (
-    <div className="mx-4 flex flex-col gap-4 mt-10">
-      <Search />
-      <CardWrapper product={data} />
+    <div className=" h-full w-full grid grid-cols-12 divide-x">
+      <div className="col-span-8">
+        <input type="search" name="Search" id="book" className="border" />
+      </div>
+      <div className="col-span-4"></div>
     </div>
   );
 };
