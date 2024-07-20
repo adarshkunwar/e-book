@@ -1,12 +1,10 @@
-import Search from "@/components/home/search";
-import CardWrapper from "@/components/shared-components/card-wrapper";
-import data from "@/data/booksCollection.json";
+import Left from "@/components/home/left";
 
 const Page = async () => {
   return (
-    <div className=" h-full w-full grid grid-cols-12 divide-x">
+    <div className=" h-full w-full grid grid-cols-12 gap-5">
       <div className="col-span-8">
-        <input type="search" name="Search" id="book" className="border" />
+        <Left />
       </div>
       <div className="col-span-4"></div>
     </div>
