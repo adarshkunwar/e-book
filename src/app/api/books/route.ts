@@ -1,9 +1,9 @@
-import books from "@/data/booksCollection.json";
+import { books } from "@/data/booksCollection";
+import prisma from "@/lib/prisma";
+import { NextRequest, NextResponse } from "next/server";
 
-export async function GET() {
-  return Response.json({
-    data: books,
-    message: "books found successfully"
-  });
+export async function GET(req: NextRequest) {
+  const users = await prisma.book.findMany();
+  return NextResponse.json(users);
 }
 
