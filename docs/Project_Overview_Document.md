@@ -1,7 +1,7 @@
 # Project Overview Document
 
 - **Project Name:** Reader's Haven - book sharing platform
-- **Project Manager:** Adarsh Kunwar ( [LinkedIn](https://www.linkedin.com/in/adarsh-kunwar-614557268/) ) 
+- **Project Manager:** Adarsh Kunwar ( [LinkedIn](https://www.linkedin.com/in/adarsh-kunwar-614557268/) )
 - **Date Prepared:** 2024-07-25
 
 ## Table of Contents
@@ -43,12 +43,14 @@ The project will include the following features:
 ## Project Requirements
 
 - **Functional Requirements:**
+
   - Users must be able to register, log in, and log out.
   - Users can create and edit stories.
   - Stories should be categorized by genres.
   - Users can comment on stories.
 
 - **Non-Functional Requirements:**
+
   - The application should be responsive and work on all major devices.
   - Secure user data with authentication and authorization mechanisms.
 
@@ -89,6 +91,7 @@ The project will include the following features:
 ### Day 1: Project Setup
 
 - **Morning:**
+
   - Define project repository and set up version control (e.g., GitHub).
   - Initialize the Next.js project and install necessary dependencies.
 
@@ -99,6 +102,7 @@ The project will include the following features:
 ### Day 2: User Authentication
 
 - **Morning:**
+
   - Implement user registration functionality (sign-up form and backend integration).
   - Set up user login functionality (login form and backend integration).
 
@@ -109,6 +113,7 @@ The project will include the following features:
 ### Day 3: Book Management - Part 1
 
 - **Morning:**
+
   - Design the book search feature (UI and backend).
   - Implement the book search functionality (integrate with PostgreSQL).
 
@@ -119,6 +124,7 @@ The project will include the following features:
 ### Day 4: Book Management - Part 2
 
 - **Morning:**
+
   - Implement the book sharing feature.
   - Design and develop the UI for book sharing.
 
@@ -129,6 +135,7 @@ The project will include the following features:
 ### Day 5: Rating and Review System
 
 - **Morning:**
+
   - Design the rating system UI.
   - Implement backend logic for rating books.
 
@@ -140,6 +147,7 @@ The project will include the following features:
 ### Day 6: Story Management and Comments
 
 - **Morning:**
+
   - Implement story creation and editing features.
   - Design and develop the UI for story management.
 
@@ -150,6 +158,7 @@ The project will include the following features:
 ### Day 7: Responsiveness and Security
 
 - **Morning:**
+
   - Ensure the application is responsive on all major devices.
   - Review and implement additional security measures if needed.
 
@@ -157,4 +166,3 @@ The project will include the following features:
   - Deploy the application on Vercel.
   - Perform final testing and bug fixes.
   - Review project progress and plan for the next development phase.
-
