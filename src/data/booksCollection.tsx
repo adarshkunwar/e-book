@@ -62,7 +62,7 @@ const genres = [
 const randomNumber = (min: number, max: number) =>
   Math.floor(Math.random() * (max - min) + min);
 
-export const books = (number: number) =>
+export const books = (number: number): TBook[] =>
   Array.from({ length: number }, (_) => ({
     id: randomNumber(1, 9999).toString(),
     title: faker.lorem.words(),
@@ -75,4 +75,6 @@ export const books = (number: number) =>
       { length: 3 },
       () => genres[randomNumber(0, genres.length)]
     ),
-  })) as TBook[];
+    currentChapter: randomNumber(1, 10),
+    totalChapter: randomNumber(10, 100),
+  }));
