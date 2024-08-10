@@ -68,6 +68,7 @@ export const books = (number: number) =>
     title: faker.lorem.words(),
     author: faker.person.fullName(),
     cover: faker.image.url(),
+    description: faker.lorem.paragraphs(100),
     summary: faker.lorem.paragraph(10),
     published: faker.date.past().toISOString(),
     genres: Array.from(
