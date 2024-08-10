@@ -1,10 +1,9 @@
 import { books as Book } from "@/data/booksCollection";
 import { TBook, TLastReadingBook } from "@/types/book";
-import { NextApiRequest, NextApiResponse } from 'next';
-import { NextRequest, NextResponse } from "next/server";
+import { NextResponse } from "next/server";
 // import prisma from '@/lib/prisma';
 
-export async function GET(req: NextRequest) {
+export async function GET() {
 	///////////////////////////////////////////
 	// in case of using a backend
 	//
@@ -44,7 +43,7 @@ export async function GET(req: NextRequest) {
 
 	///////////////////////////////////////////
 	// in case of using a local data
-	const lastReadingBook: TLastReadingBook = Book(1).map((book: TBook) => {
+	const lastReadingBook: TLastReadingBook[] = Book(1).map((book: TBook) => {
 		return {
 			id: book.id,
 			title: book.title,
@@ -55,10 +54,10 @@ export async function GET(req: NextRequest) {
 			summary: book.summary,
 		};
 
-	})[0];
+	});
 
 
-	const returable = NextResponse.json(lastReadingBook);
+	const returable = NextResponse.json(lastReadingBook, { status: 200 });
 	return returable;
 
 
