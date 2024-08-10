@@ -15,7 +15,7 @@ export default function SingleCardItem({ product }: Props) {
   }
 
   return (
-    <Link href={`/api/books/${product.id}`}>
+    <Link href={`/book/${product.id}`}>
       <Card>
         <CardHeader>
           <div className="aspect-[3/4] overflow-clip w-full p-2">
