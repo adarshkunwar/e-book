@@ -62,19 +62,24 @@ const genres = [
 const randomNumber = (min: number, max: number) =>
   Math.floor(Math.random() * (max - min) + min);
 
-export const books = (number: number): TBook[] =>
-  Array.from({ length: number }, (_) => ({
-    id: randomNumber(1, 9999).toString(),
-    title: faker.lorem.words(),
-    author: faker.person.fullName(),
-    cover: faker.image.url(),
-    description: faker.lorem.paragraphs(100),
-    summary: faker.lorem.paragraph(10),
-    published: faker.date.past().toISOString(),
-    genres: Array.from(
-      { length: 3 },
-      () => genres[randomNumber(0, genres.length)]
-    ),
-    currentChapter: randomNumber(1, 10),
-    totalChapter: randomNumber(10, 100),
-  }));
+export const books = (number: number): TBook[] => {
+  const array = [];
+  for (let i = 0; i < number; i++) {
+    array.push({
+      id: (i + 1).toString(),
+      title: faker.lorem.words(),
+      author: faker.person.fullName(),
+      cover: faker.image.url(),
+      description: faker.lorem.paragraphs(25),
+      summary: faker.lorem.paragraph(5),
+      published: faker.date.past().toISOString(),
+      genres: Array.from(
+        { length: 3 },
+        () => genres[randomNumber(0, genres.length)]
+      ),
+      currentChapter: randomNumber(1, 10),
+      totalChapter: randomNumber(10, 100),
+    });
+  }
+  return array;
+};
