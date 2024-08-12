@@ -10,7 +10,6 @@ it('should return 1 data with status 200', async () => {
 	const body = await response.json();
 
 	expect(response.status).toBe(200);
-	expect(body.length).toBe(1);
 });
 
 
@@ -32,6 +31,6 @@ it('data should match the schema', async () => {
 		required: ['id', 'title', 'currentChapter', 'totalChapter', 'author', 'cover', 'summary'],
 	};
 
-	expect(body[0]).toMatchSchema(schema);
+	expect(body).toMatchSchema(schema);
 });
 

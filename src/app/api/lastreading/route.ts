@@ -6,8 +6,6 @@ import { NextResponse } from "next/server";
 export async function GET() {
 	///////////////////////////////////////////
 	// in case of using a backend
-	//
-	//
 	// const { userId } = req.query;
 	//
 	// if (typeof userId !== 'string') {
@@ -43,7 +41,7 @@ export async function GET() {
 
 	///////////////////////////////////////////
 	// in case of using a local data
-	const lastReadingBook: TLastReadingBook[] = Book(1).map((book: TBook) => {
+	const lastReadingBook: TLastReadingBook = Book(1).map((book: TBook) => {
 		return {
 			id: book.id,
 			title: book.title,
@@ -53,13 +51,8 @@ export async function GET() {
 			cover: book.cover,
 			summary: book.summary,
 		};
-
-	});
-
+	})[0];
 
 	const returable = NextResponse.json(lastReadingBook, { status: 200 });
 	return returable;
-
-
-
 }
