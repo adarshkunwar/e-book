@@ -3,8 +3,7 @@ import { TBook } from "@/types/book";
 
 const genres = [
   "Fiction",
-  "Non-Fiction",
-  "Science Fiction",
+  "Non-Fiction", "Science Fiction",
   "Fantasy",
   "Mystery",
   "Thriller",
