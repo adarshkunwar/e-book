@@ -7,27 +7,48 @@ datasource db {
   url      = env("DATABASE_URL")
 }
 
-model author {
-  id    Int    @id(map: "PK_5a0e79799d372fe56f2f3fa6871") @default(autoincrement())
-  name  String @db.VarChar
-  email String @db.VarChar
-  phone String @db.VarChar
-  book  String @db.VarChar
+model user {
+  id        Int              @id @default(autoincrement())
+  firstName String           @db.VarChar
+  lastName  String           @db.VarChar
+  email     String           @db.VarChar
+  password  String           @db.VarChar
+  age       Int
+  authored  book[]
+  read      readingHistory[]
+}
+
+model chapter {
+  id             Int              @id @default(autoincrement())
+  title          String           @db.VarChar
+  content        String           @db.VarChar
+  book           book             @relation(fields: [bookId], references: [id])
+  bookId         Int
+  chapterNo      Int
+  readingHistory readingHistory[]
+}
+
+model readingHistory {
+  id        Int      @id @default(autoincrement())
+  user      user     @relation(fields: [userId], references: [id])
+  userId    Int
+  book      book     @relation(fields: [bookId], references: [id])
+  bookId    Int
+  chapter   chapter  @relation(fields: [chapterId], references: [id])
+  chapterId Int
+  lastRead  DateTime @db.Timestamp(6)
+  lastPage  Int
 }
 
 model book {
-  id            Int      @id(map: "PK_a3afef72ec8f80e6e5c310b28a4") @default(autoincrement())
-  title         String   @db.VarChar
-  author        String   @db.VarChar
-  genre         String
-  publishedDate DateTime @db.Timestamp(6)
-  lastUpdated   DateTime @db.Timestamp(6)
-  data          String   @db.VarChar
-}
-
-model user {
-  id        Int    @id(map: "PK_cace4a159ff9f2512dd42373760") @default(autoincrement())
-  firstName String @db.VarChar
-  lastName  String @db.VarChar
-  age       Int
+  id             Int              @id @default(autoincrement())
+  title          String           @db.VarChar
+  author         user             @relation(fields: [authorId], references: [id])
+  genre          String
+  publishedDate  DateTime         @db.Timestamp(6)
+  lastUpdated    DateTime         @db.Timestamp(6)
+  authorId       Int
+  data           String           @db.VarChar
+  chapters       chapter[]
+  readingHistory readingHistory[]
 }
