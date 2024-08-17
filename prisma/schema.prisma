@@ -13,7 +13,6 @@ model user {
   lastName  String           @db.VarChar
   email     String           @db.VarChar
   password  String           @db.VarChar
-  age       Int
   authored  book[]
   read      readingHistory[]
 }
