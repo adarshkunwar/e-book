@@ -4,26 +4,48 @@ const nextConfig = {
     remotePatterns: [
       {
         protocol: "https",
-        hostname: "images.unsplash.com"
+        hostname: "images.unsplash.com",
       },
       {
         protocol: "https",
-        hostname: "loremflickr.com"
+        hostname: "loremflickr.com",
       },
       {
         protocol: "https",
-        hostname: "picsum.photos"
+        hostname: "picsum.photos",
       },
       {
         protocol: "https",
-        hostname: "plus.unsplash.com"
+        hostname: "plus.unsplash.com",
       },
       {
         protocol: "https",
-        hostname: "media.thuprai.com"
-      }
-    ]
-  }
+        hostname: "media.thuprai.com",
+      },
+    ],
+  },
+
+  async headers() {
+    return [
+      {
+        // matching all API routes
+        source: "/api/:path*",
+        headers: [
+          { key: "Access-Control-Allow-Credentials", value: "true" },
+          { key: "Access-Control-Allow-Origin", value: "*" },
+          {
+            key: "Access-Control-Allow-Methods",
+            value: "GET,OPTIONS,PATCH,DELETE,POST,PUT",
+          },
+          {
+            key: "Access-Control-Allow-Headers",
+            value:
+              "X-CSRF-Token, X-Requested-With, Accept, Accept-Version, Content-Length, Content-MD5, Content-Type, Date, X-Api-Version",
+          },
+        ],
+      },
+    ];
+  },
 };
 
 export default nextConfig;
