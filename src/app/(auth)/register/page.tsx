@@ -19,6 +19,7 @@ import {
   RegisterFormField,
   TRegiserFormSchema,
 } from "@/model/register.model";
+import Link from "next/link";
 
 export default function SignIn() {
   return <InputForm />;
@@ -95,11 +96,12 @@ const InputForm = () => {
             )}
           />
         ))}
-        <div className="col-span-12 flex justify-end">
-          <Button type="submit" className="px-4 py-2">
+        <div className="col-span-12 flex justify-end w-full">
+          <Button type="submit" className="px-4 py-2 w-full">
             Submit
           </Button>
         </div>
+        <Link href="/login">Login </Link>
       </form>
     </Form>
   );
