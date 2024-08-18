@@ -2,6 +2,7 @@ import type { Metadata } from "next";
 import { Inter } from "next/font/google";
 import "./globals.css";
 import Sidebar from "@/components/shared-components/layout/sidebar";
+import { Toaster } from "react-hot-toast";
 
 const inter = Inter({ subsets: ["latin"] });
 
@@ -24,6 +25,7 @@ export default function RootLayout({
           </div>
           <div className="w-full h-full overflow-scroll overflow-x-hidden px-4 py-10 bg-gray-100">
             {children}
+            <Toaster position="top-right" reverseOrder={false} />{" "}
           </div>
         </div>
       </body>
