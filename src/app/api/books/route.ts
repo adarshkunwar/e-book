@@ -18,9 +18,11 @@ export async function GET(req: NextRequest) {
 export async function POST(req: NextRequest) {
   try {
     const { title, authorId } = await req.json();
+    console.log("title", title);
+    console.log("authorId", authorId);
 
     const author = await prisma.user.findUnique({
-      where: { id: authorId },
+      where: { id: Number(authorId) },
     });
 
     if (!author) {
