@@ -48,6 +48,7 @@ model book {
   lastUpdated    DateTime         @db.Timestamp(6)
   authorId       Int
   data           String           @db.VarChar
+  coverImage     String?          @db.VarChar  // Add this field
   chapters       chapter[]
   readingHistory readingHistory[]
 }
