@@ -7,8 +7,6 @@ import { z } from "zod";
 const bookSchema = z.object({
   title: z.string().min(1),
   genre: z.string().min(1),
-  publishedDate: z.string().transform((date) => new Date(date)),
-  lastUpdated: z.string().transform((date) => new Date(date)),
   data: z.string().optional(),
 });
 
@@ -42,23 +40,28 @@ export async function POST(req: NextRequest) {
       return NextResponse.json({ error: "Author not found" }, { status: 404 });
     }
 
-    const body = await req.json();
+    // Parse the form data
+    const body = await req.formData();
+    const formData = {
+      title: body.get("title"),
+      genre: body.get("genre"),
+      data: body.get("data"),
+    };
+
     const bookData = bookSchema.parse({
-      ...body,
-      authorId: Number(authorId), // Add authorId to the book data
+      ...formData,
+      data: formData.data ?? undefined,
     });
 
-    // Create a new book entry
+    // Create a new book entry with the current time as publishedDate
     const newBook = await prisma.book.create({
       data: {
         title: bookData.title,
         genre: bookData.genre,
-        publishedDate: bookData.publishedDate,
-        lastUpdated: bookData.lastUpdated,
-        data: bookData?.data
-          ? bookData.data
-          : "Info about the book wasnt probvided",
-        author: { connect: { id: Number(authorId) } }, // Correctly reference the author
+        publishedDate: new Date(), // Automatically set to the current time
+        lastUpdated: new Date(),
+        data: bookData.data ?? "Info about the book wasn't provided",
+        author: { connect: { id: Number(authorId) } },
       },
     });
 
