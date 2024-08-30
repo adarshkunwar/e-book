@@ -20,9 +20,16 @@ import {
   TRegiserFormSchema,
 } from "@/model/login.model";
 import Link from "next/link";
+import { setLocalStorage } from "@/lib/localstorage";
+import { useRouter } from "next/navigation";
 
 export default function SignIn() {
-  return <InputForm />;
+  return (
+    <div className="flex flex-col gap-5">
+      <h1 className="text-3xl font-bold">Login</h1>
+      <InputForm />
+    </div>
+  );
 }
 
 const InputForm = () => {
@@ -30,6 +37,8 @@ const InputForm = () => {
     resolver: zodResolver(registerFormSchema),
     defaultValues: RegisterFormDefaultValue,
   });
+
+  const router = useRouter(); // Initialize the router
 
   async function onSubmit(data: TRegiserFormSchema) {
     const finalData = {
@@ -52,12 +61,14 @@ const InputForm = () => {
       }
 
       const responseData = await response.json(); // Parse the JSON response
+      setLocalStorage("id", responseData.data.id);
+
       toast.success("Logged in successfully!");
       console.log(responseData);
-      localStorage.setItem("token", responseData.data.id); // Store the token correctly
+      router.push("/"); // Use router.push for client-side navigation
     } catch (error) {
       console.error(error); // Log the actual error for debugging
-      toast.error("Could not login");
+      toast.error("Could not login", error || "An error occurred");
     }
   }
   return (
@@ -99,7 +110,9 @@ const InputForm = () => {
             Submit
           </Button>
         </div>
-        <Link href="/register">Register</Link>
+        <Link href="/register" className="px-4 text-blue-500 underline">
+          Register
+        </Link>
       </form>
     </Form>
   );

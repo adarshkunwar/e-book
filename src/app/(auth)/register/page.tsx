@@ -22,7 +22,12 @@ import {
 import Link from "next/link";
 
 export default function SignIn() {
-  return <InputForm />;
+  return (
+    <div className="flex flex-col gap-5">
+      <h1 className="text-3xl font-bold">Register</h1>
+      <InputForm />
+    </div>
+  );
 }
 
 const InputForm = () => {
@@ -96,12 +101,14 @@ const InputForm = () => {
             )}
           />
         ))}
-        <div className="col-span-12 flex justify-end w-full">
+        <div className="col-span-12 flex justify-end w-full px-4">
           <Button type="submit" className="px-4 py-2 w-full">
             Submit
           </Button>
         </div>
-        <Link href="/login">Login </Link>
+        <Link href="/login" className="underline px-4 text-blue-500">
+          Login{" "}
+        </Link>
       </form>
     </Form>
   );

@@ -15,6 +15,7 @@ const bookSchema = z.object({
 export async function GET(req: NextRequest) {
   const headersList = headers();
   const authorId = headersList.get("id");
+  console.log("Author ID:", authorId);
   if (!authorId) {
     return NextResponse.json({ error: "No ID provided" }, { status: 400 });
   }
