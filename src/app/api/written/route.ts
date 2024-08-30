@@ -1,7 +1,9 @@
 import { NextRequest, NextResponse } from "next/server";
+import { writeFile } from "fs/promises";
 import { headers } from "next/headers";
 import prisma from "@/lib/prisma";
 import { z } from "zod";
+import path from "path";
 
 // Define the schema for validating the book data
 const bookSchema = z.object({
@@ -26,6 +28,7 @@ export async function GET(req: NextRequest) {
 
 export async function POST(req: NextRequest) {
   try {
+    // Get the author ID from the headers
     const headersList = headers();
     const authorId = headersList.get("id");
     if (!authorId) {
@@ -53,6 +56,33 @@ export async function POST(req: NextRequest) {
       data: formData.data ?? undefined,
     });
 
+    // Process the file
+    const file: File | null = body.get("coverImage") as unknown as File;
+    if (!file) {
+      return NextResponse.json(
+        { success: false, error: "No file provided" },
+        { status: 400 },
+      );
+    }
+
+    // Ensure the file is an image (basic MIME type check)
+    if (!file.type.startsWith("image/")) {
+      return NextResponse.json(
+        { success: false, error: "Invalid file type, only images are allowed" },
+        { status: 400 },
+      );
+    }
+
+    const bytes = await file.arrayBuffer();
+    const buffer = Buffer.from(bytes);
+
+    // Generate a safe file path and name
+    const uploadsDir = path.join(process.cwd(), "public/uploads");
+    const filePath = path.join(uploadsDir, file.name);
+
+    // Save the file to the public/uploads directory
+    await writeFile(filePath, buffer);
+
     // Create a new book entry with the current time as publishedDate
     const newBook = await prisma.book.create({
       data: {
@@ -62,6 +92,7 @@ export async function POST(req: NextRequest) {
         lastUpdated: new Date(),
         data: bookData.data ?? "Info about the book wasn't provided",
         author: { connect: { id: Number(authorId) } },
+        coverImage: file.name,
       },
     });
 
