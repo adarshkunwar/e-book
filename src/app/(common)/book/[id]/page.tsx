@@ -2,6 +2,7 @@ import React from "react";
 import Image from "next/image";
 import { Capitalize } from "@/lib/filterName";
 import { Button } from "@/components/ui/button";
+import SingleBookPage from "@/components/shared-components/single-book-page";
 
 type HomeProps = {
   params: {
@@ -16,17 +17,20 @@ const Home: React.FC<HomeProps> = async ({ params }) => {
   const book = await res.json();
   const capitalizedTitle = Capitalize(book.title);
 
+  return <SingleBookPage />;
+
   return (
     <div className="relative pt-96">
       <section className="flex justify-center gap-5 absolute -translate-y-2/3 left-1/2 -translate-x-1/2">
-        <div className="w-[370px] h-[500px] flex-1">
+        <div className="w-full h-[500px] max-w-[300px] flex-1">
           <Image
-            src={book.cover}
+            src={`/uploads/${book.coverImage}`}
             alt={book.title}
             height={500}
-            width={400}
+            width={450}
             loading="lazy"
             className="w-full h-full object-cover rounded-lg shadow-lg"
+            style={{ objectFit: "cover", objectPosition: "center" }}
           />
         </div>
         <header className="text-center mb-12 pt-10 flex-1 flex flex-col gap-10">
@@ -70,7 +74,7 @@ const Home: React.FC<HomeProps> = async ({ params }) => {
                 Genres:
               </strong>
               <ul className="list-disc list-inside pl-4">
-                {book.genres.map((genre: string) => (
+                {book.genres?.map((genre: string) => (
                   <li
                     key={genre}
                     className="transition-colors duration-300 hover:text-gray-800"
@@ -82,7 +86,6 @@ const Home: React.FC<HomeProps> = async ({ params }) => {
             </div>
           </div>
         </div>
-
       </div>
     </div>
   );
