@@ -1,6 +1,6 @@
 import type { Metadata } from "next";
 import { Inter } from "next/font/google";
-import "./globals.css";
+import "../globals.css";
 
 import { SidebarDemo as Sidebar } from "@/components/shared-components/layout/sidebar";
 import { Toaster } from "react-hot-toast";
@@ -20,7 +20,7 @@ export default function RootLayout({
   return (
     <html lang="en">
       <body className={inter.className}>
-        {children}
+        <Sidebar>{children}</Sidebar>
         <Toaster position="top-center" reverseOrder={false} />
       </body>
     </html>

@@ -1,16 +1,15 @@
 "use client";
 import React, { useState } from "react";
 import { Sidebar, SidebarBody, SidebarLink } from "../../ui/sidebar";
-import {
-  IconArrowLeft,
-  IconBrandTabler,
-  IconSettings,
-  IconUserBolt,
-} from "@tabler/icons-react";
 import Link from "next/link";
 import { motion } from "framer-motion";
 import Image from "next/image";
 import { cn } from "@/lib/utils";
+import { GoHome } from "react-icons/go";
+import { BiLibrary } from "react-icons/bi";
+import { CiPen } from "react-icons/ci";
+import { CiBellOn } from "react-icons/ci";
+import { GoGear } from "react-icons/go";
 
 type SidebarDemoProps = {
   children: React.ReactNode;
@@ -20,31 +19,28 @@ export function SidebarDemo({ children }: SidebarDemoProps) {
   const links = [
     {
       label: "Dashboard",
-      href: "#",
-      icon: (
-        <IconBrandTabler className="text-neutral-700 dark:text-neutral-200 h-5 w-5 flex-shrink-0" />
-      ),
+      icon: <GoHome />,
+      href: "/",
     },
     {
-      label: "Profile",
-      href: "#",
-      icon: (
-        <IconUserBolt className="text-neutral-700 dark:text-neutral-200 h-5 w-5 flex-shrink-0" />
-      ),
+      label: "Library",
+      icon: <BiLibrary />,
+      href: "/library",
+    },
+    {
+      label: "Write",
+      icon: <CiPen />,
+      href: "/write",
+    },
+    {
+      label: "Notification",
+      icon: <CiBellOn />,
+      href: "/notification",
     },
     {
       label: "Settings",
-      href: "#",
-      icon: (
-        <IconSettings className="text-neutral-700 dark:text-neutral-200 h-5 w-5 flex-shrink-0" />
-      ),
-    },
-    {
-      label: "Logout",
-      href: "#",
-      icon: (
-        <IconArrowLeft className="text-neutral-700 dark:text-neutral-200 h-5 w-5 flex-shrink-0" />
-      ),
+      icon: <GoGear />,
+      href: "/settings",
     },
   ];
   const [open, setOpen] = useState(false);
