@@ -1,49 +1,72 @@
 "use client";
 import React, { useState } from "react";
-import { Sidebar, SidebarBody, SidebarLink } from "../../ui/sidebar";
-import Link from "next/link";
-import { motion } from "framer-motion";
-import Image from "next/image";
+
+import { Sidebar, SidebarBody, SidebarLink } from "@/components/ui/sidebar";
+import { Capitalize } from "@/lib/filterName";
+import { getLocalStorage } from "@/lib/localstorage";
 import { cn } from "@/lib/utils";
-import { GoHome } from "react-icons/go";
+import { motion } from "framer-motion";
+import Link from "next/link";
 import { BiLibrary } from "react-icons/bi";
-import { CiPen } from "react-icons/ci";
-import { CiBellOn } from "react-icons/ci";
-import { GoGear } from "react-icons/go";
+import { CiBellOn, CiPen } from "react-icons/ci";
+import { GoGear, GoHome } from "react-icons/go";
 
 type SidebarDemoProps = {
   children: React.ReactNode;
 };
 
-export function SidebarDemo({ children }: SidebarDemoProps) {
-  const links = [
-    {
-      label: "Dashboard",
-      icon: <GoHome />,
-      href: "/",
-    },
-    {
-      label: "Library",
-      icon: <BiLibrary />,
-      href: "/library",
-    },
-    {
-      label: "Write",
-      icon: <CiPen />,
-      href: "/write",
-    },
-    {
-      label: "Notification",
-      icon: <CiBellOn />,
-      href: "/notification",
-    },
-    {
-      label: "Settings",
-      icon: <GoGear />,
-      href: "/settings",
-    },
-  ];
+type link = {
+  label: string;
+  icon: React.ReactNode;
+  href: string;
+};
+
+const links: link[] = [
+  {
+    label: "Dashboard",
+    icon: <GoHome />,
+    href: "/",
+  },
+  {
+    label: "Library",
+    icon: <BiLibrary />,
+    href: "/library",
+  },
+  {
+    label: "Write",
+    icon: <CiPen />,
+    href: "/write",
+  },
+  {
+    label: "Notification",
+    icon: <CiBellOn />,
+    href: "/notification",
+  },
+  {
+    label: "Settings",
+    icon: <GoGear />,
+    href: "/settings",
+  },
+];
+
+export default function SideBarFinal({ children }: SidebarDemoProps) {
   const [open, setOpen] = useState(false);
+
+  const [user, setUser] = React.useState("");
+
+  React.useEffect(() => {
+    const fetchData = async () => {
+      const id = getLocalStorage("id");
+      const res = await fetch(`http://localhost:3000/api/user/${id}`);
+      if (!res.ok) throw new Error("Failed to fetch userData");
+      const data = await res.json();
+      const name = Capitalize(data.firstName) + " " + Capitalize(data.lastName);
+      setUser(name);
+    };
+
+    fetchData();
+  }, []);
+
   return (
     <div
       className={cn(
@@ -64,24 +87,20 @@ export function SidebarDemo({ children }: SidebarDemoProps) {
           <div>
             <SidebarLink
               link={{
-                label: "Manu Arora",
+                label: user,
                 href: "#",
                 icon: (
-                  <Image
-                    src="https://assets.aceternity.com/manu.png"
-                    className="h-7 w-7 flex-shrink-0 rounded-full"
-                    width={50}
-                    height={50}
-                    alt="Avatar"
-                  />
+                  <div>
+                    <div className="border border-black w-8 h-8 rounded-full flex items-center justify-center">
+                      {user[0]}
+                    </div>
+                  </div>
                 ),
               }}
             />
           </div>
         </SidebarBody>
       </Sidebar>
-
-      {/* children styling */}
       <div className="flex flex-1">
         <div className="p-2 md:p-10 rounded-tl-2xl border border-neutral-200 dark:border-neutral-700 bg-white dark:bg-neutral-900 flex flex-col gap-2 flex-1 w-full h-full">
           {children}
@@ -102,7 +121,7 @@ export const Logo = () => {
         animate={{ opacity: 1 }}
         className="font-medium text-black dark:text-white whitespace-pre"
       >
-        Reader&apos;s Haven
+        Reader&apos;s&nbsp;Haven
       </motion.span>
     </Link>
   );
@@ -115,31 +134,5 @@ export const LogoIcon = () => {
     >
       <div className="h-5 w-6 bg-black dark:bg-white rounded-br-lg rounded-tr-sm rounded-tl-lg rounded-bl-sm flex-shrink-0" />
     </Link>
-  );
-};
-
-// Dummy dashboard component with content
-const Dashboard = () => {
-  return (
-    <div className="flex flex-1">
-      <div className="p-2 md:p-10 rounded-tl-2xl border border-neutral-200 dark:border-neutral-700 bg-white dark:bg-neutral-900 flex flex-col gap-2 flex-1 w-full h-full">
-        <div className="flex gap-2">
-          {[...new Array(4)].map((i) => (
-            <div
-              key={"first-array" + i}
-              className="h-20 w-full rounded-lg  bg-gray-100 dark:bg-neutral-800 animate-pulse"
-            ></div>
-          ))}
-        </div>
-        <div className="flex gap-2 flex-1">
-          {[...new Array(2)].map((i) => (
-            <div
-              key={"second-array" + i}
-              className="h-full w-full rounded-lg  bg-gray-100 dark:bg-neutral-800 animate-pulse"
-            ></div>
-          ))}
-        </div>
-      </div>
-    </div>
   );
 };
