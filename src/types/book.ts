@@ -1,8 +1,15 @@
+export type TAuthor = {
+  id: string;
+  firstName: string;
+  lastName: string;
+  email: string;
+};
+
 export type TBook = {
   id: string;
   title: string;
-  author: string;
-  description: string;
+  author: TAuthor;
+  data: string;
   coverImage: string;
   summary: string;
   published: string;
