@@ -13,7 +13,7 @@ model user {
   lastName  String           @db.VarChar
   email     String           @db.VarChar
   password  String           @db.VarChar
-  authored  book[]
+  authored  book[]           @relation("UserBooks") // Relation with books authored by the user
   read      readingHistory[]
 }
 
@@ -42,7 +42,7 @@ model readingHistory {
 model book {
   id             Int              @id @default(autoincrement())
   title          String           @db.VarChar
-  author         user             @relation(fields: [authorId], references: [id])
+  author         user             @relation("UserBooks", fields: [authorId], references: [id])
   genre          String
   publishedDate  DateTime         @db.Timestamp(6)
   lastUpdated    DateTime         @db.Timestamp(6)
