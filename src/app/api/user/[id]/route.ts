@@ -1,10 +1,22 @@
+import { books as Book } from "@/data/booksCollection";
 import prisma from "@/lib/prisma";
+import { TBook, TBookCard } from "@/types/book";
 import { NextRequest, NextResponse } from "next/server";
 
-export async function GET(req: NextRequest) {
+export async function GET(
+  req: NextRequest,
+  { params }: { params: { id: string } },
+) {
   ///////////////////////////////////////////
-  // in case of using a backend
-  const data = await prisma.user.findMany();
+  // slug
+  const { id } = params;
+  if (isNaN(Number(id))) {
+    return NextResponse.json({ error: "Invalid user ID" }, { status: 400 });
+  }
+
+  const data = await prisma.user.findUnique({
+    where: { id: Number(id) },
+  });
   if (!data) {
     return NextResponse.json({ error: "User not found" }, { status: 404 });
   }
