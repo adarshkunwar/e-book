@@ -1,37 +1,62 @@
-import Image from "next/image";
-import { Card, CardContent, CardHeader } from "@/components/ui/card";
+import { Capitalize } from "@/lib/filterName";
+import { cn } from "@/lib/utils";
 import { TBook } from "@/types/book";
+import Image from "next/image";
 import Link from "next/link";
 
-type Props = {
-  product: TBook;
+type SingleCardItemProps = {
+  data: TBook;
 };
 
-export default function SingleCardItem({ product }: Props) {
-  const upperCaseName = (name: string) => {
-    return name.charAt(0).toUpperCase() + name.slice(1);
-  };
-
+export default function CardDemo({ data }: SingleCardItemProps) {
   return (
-    <Link href={`/book/${product.id}`}>
-      <Card>
-        <CardHeader>
-          <div className="aspect-[3/4] overflow-clip w-full p-2">
-            <Image
-              width={0}
-              height={0}
-              sizes="100vw"
-              className="h-full w-full rounded-lg object-cover shadow"
-              src={`/uploads/${product.coverImage}`}
-              alt={product.title}
-            />
+    <Link href={`/book/${data.id}`}>
+      <div className="max-w-xs w-full group/card">
+        <div
+          className={
+            " cursor-pointer overflow-hidden relative card h-96 rounded-md shadow-xl  max-w-sm mx-auto backgroundImage flex flex-col justify-between p-4"
+          }
+        >
+          <div className="absolute w-full h-full top-0 left-0 transition duration-300 group-hover/card:bg-black opacity-60"></div>
+          <div className="absolute w-full h-full top-0 left-0 transition duration-300 group-hover/card:bg-black opacity-60">
+            {data.coverImage ? (
+              <Image
+                src={`/uploads/${data.coverImage}`}
+                alt={data?.title}
+                layout="fill"
+                objectFit="cover"
+                objectPosition="center"
+              />
+            ) : (
+              <div className="w-full h-full flex items-center justify-center bg-gray-200 text-gray-700 text-center text-2xl font-bold relative">
+                <span className="bg-white p-4 rounded-lg shadow-md">
+                  {Capitalize(data?.title || "No Title")}
+                </span>
+              </div>
+            )}
           </div>
-        </CardHeader>
-        <CardContent>
-          <h3 className="text-lg font-black">{upperCaseName(product.title)}</h3>
-          <h3 className="text-sm">{product.author}</h3>
-        </CardContent>
-      </Card>
+          <div className="flex flex-row items-center space-x-4 z-10">
+            <div>
+              <div className="border border-white w-8 h-8 rounded-full flex items-center justify-center text-black">
+                {Capitalize(data?.author?.firstName[0])}
+              </div>
+            </div>
+            <div className="flex flex-col">
+              <p className="font-normal text-base text-gray-50 relative z-10">
+                {data?.author?.firstName + " " + data?.author?.lastName}
+              </p>
+            </div>
+          </div>
+          <div className="text content">
+            <h1 className="font-bold text-xl md:text-2xl text-white relative z-10">
+              {data?.title}
+            </h1>
+            <p className="font-normal text-sm relative z-10 my-4 line-clamp-2 text-white ">
+              {data?.data}
+            </p>
+          </div>
+        </div>
+      </div>
     </Link>
   );
 }
