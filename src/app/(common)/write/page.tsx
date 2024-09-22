@@ -4,11 +4,8 @@ import Right from "@/components/write/right";
 const Page = async () => {
   return (
     <div className=" h-full w-full grid grid-cols-12 gap-5">
-      <div className="col-span-8">
+      <div className="col-span-12">
         <Left />
-      </div>
-      <div className="col-span-4">
-        <Right />
       </div>
     </div>
   );
