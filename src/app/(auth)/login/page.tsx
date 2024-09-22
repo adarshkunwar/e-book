@@ -62,7 +62,7 @@ const InputForm = () => {
 
       const responseData = await response.json(); // Parse the JSON response
       setLocalStorage("id", responseData.data.id);
-
+      document.cookie = `id=${responseData.data.id}; path=/;`;
       toast.success("Logged in successfully!");
       console.log(responseData);
       router.push("/"); // Use router.push for client-side navigation

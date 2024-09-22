@@ -18,11 +18,9 @@ export default function RootLayout({
   children: React.ReactNode;
 }>) {
   return (
-    <html lang="en">
-      <body className={inter.className}>
-        <SideBarFinal>{children}</SideBarFinal>
-        <Toaster position="top-center" reverseOrder={false} />
-      </body>
-    </html>
+    <section>
+      <SideBarFinal>{children}</SideBarFinal>
+      <Toaster position="top-center" reverseOrder={false} />
+    </section>
   );
 }

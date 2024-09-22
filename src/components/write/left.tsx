@@ -1,11 +1,53 @@
+import { getLocalStorage } from "@/lib/localstorage";
+import { cookies } from "next/headers";
 import { Button } from "../ui/button";
 import DisplayData from "./displayData";
 
-export default async function Left() {
+export async function getServerSideProps() {
+  const cookieStore = cookies();
+  const id = cookieStore.get("id");
+  console.log("HKJKJKJ");
+  const res = await fetch(`http://localhost:3000/api/books/written-by/${id}`);
+  const data = await res.json();
+  const quotes = "“Your words, your worlds - Crafted and Shared.”";
+  console.log(id);
+
+  return {
+    props: {
+      data: data,
+      quotes: quotes,
+    },
+  };
+}
+
+const Left = async () => {
   ///////////////////////////////////////////
   // data centers
-  const userName = "Adarsh Kunwar";
+
+  const cookieStore = cookies(); // This works in server components
+  const id = cookieStore.get("id")?.value; // Get the cookie value
+
+  let data = [];
   const quotes = "“Your words, your worlds - Crafted and Shared.”";
+
+  if (id) {
+    try {
+      const res = await fetch(
+        `http://localhost:3000/api/books/written-by/${id}`,
+        {
+          cache: "no-store", // Disable caching for dynamic content
+        },
+      );
+      if (res.ok) {
+        data = await res.json(); // Parse data if the fetch is successful
+      }
+    } catch (error) {
+      console.error("Error fetching books:", error);
+    }
+  } else {
+    console.log("No ID cookie found.");
+  }
+  console.log(data);
 
   ///////////////////////////////////////////
   return (
@@ -28,7 +70,9 @@ export default async function Left() {
       </section>
     </div>
   );
-}
+};
+
+export default Left;
 
 const AddNewBook = async (id: number) => {
   return fetch("http://localhost:3000/api/book", {
