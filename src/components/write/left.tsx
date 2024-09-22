@@ -1,7 +1,4 @@
-import SingleCardItem from "../shared-components/single-card-item";
-import { TBook } from "@/types/book";
 import { Button } from "../ui/button";
-import { getLocalStorage } from "@/lib/localstorage";
 import DisplayData from "./displayData";
 
 export default async function Left() {

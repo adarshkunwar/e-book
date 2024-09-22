@@ -7,7 +7,7 @@ const Page = async () => {
       <div className="col-span-8">
         <Left />
       </div>
-      <div className="col-span-4">
+      <div className="col-span-4 bg-gray-100 rounded-2xl">
         <Right />
       </div>
     </div>

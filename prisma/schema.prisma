@@ -14,7 +14,7 @@ model user {
   email     String           @db.VarChar
   password  String           @db.VarChar
   authored  book[]           @relation("UserBooks") // Relation with books authored by the user
-  read      readingHistory[]
+  read      readingHistory[] @relation("ChapterReadingHistory")
 }
 
 model chapter {
@@ -24,16 +24,16 @@ model chapter {
   book           book             @relation(fields: [bookId], references: [id])
   bookId         Int
   chapterNo      Int
-  readingHistory readingHistory[]
+  readingHistory readingHistory[] @relation("ChapterReadingHistory")
 }
 
 model readingHistory {
   id        Int      @id @default(autoincrement())
-  user      user     @relation(fields: [userId], references: [id])
+  user      user     @relation("ChapterReadingHistory", fields: [userId], references: [id])
   userId    Int
   book      book     @relation(fields: [bookId], references: [id])
   bookId    Int
-  chapter   chapter  @relation(fields: [chapterId], references: [id])
+  chapter   chapter  @relation("ChapterReadingHistory", fields: [chapterId], references: [id])
   chapterId Int
   lastRead  DateTime @db.Timestamp(6)
   lastPage  Int
@@ -44,11 +44,11 @@ model book {
   title          String           @db.VarChar
   author         user             @relation("UserBooks", fields: [authorId], references: [id])
   genre          String
-  publishedDate  DateTime         @db.Timestamp(6)
-  lastUpdated    DateTime         @db.Timestamp(6)
+  publishedDate  DateTime         @default(now()) @db.Timestamp(6) // Default to createdAt
+  lastUpdated    DateTime         @updatedAt @db.Timestamp(6) // Automatically updates on modification
   authorId       Int
   data           String           @db.VarChar
-  coverImage     String?          @db.VarChar  // Add this field
+  coverImage     String?          @db.VarChar // Add this field
   chapters       chapter[]
   readingHistory readingHistory[]
 }

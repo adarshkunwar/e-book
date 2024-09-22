@@ -57,7 +57,7 @@ const DisplayData = () => {
   return (
     <div className="flex flex-col gap-4">
       {data.map((ebook: TBook, index: number) => (
-        <SingleCardItem key={index} product={ebook} />
+        <SingleCardItem key={index} data={ebook} />
       ))}
     </div>
   );

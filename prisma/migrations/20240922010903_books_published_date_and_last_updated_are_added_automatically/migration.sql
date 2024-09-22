@@ -1,0 +1,2 @@
+-- AlterTable
+ALTER TABLE "book" ALTER COLUMN "publishedDate" SET DEFAULT CURRENT_TIMESTAMP;
