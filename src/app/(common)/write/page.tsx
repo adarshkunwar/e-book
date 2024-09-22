@@ -1,5 +1,4 @@
 import Left from "@/components/write/left";
-import Right from "@/components/write/right";
 
 const Page = async () => {
   return (

@@ -23,15 +23,6 @@ export async function getServerSideProps() {
 const Left = async () => {
   return (
     <div className="mp-4 ">
-      {/* Hero Section */}
-      <section className=" rounded-lg mb-8 ">
-        <h1 className="text-5xl font-bold mb-2 leading-normal">
-          Books Written, <br /> By you.
-        </h1>
-        <p className="text-lgj">{quotes}</p>
-        <Button className="mt-4 rounded-full px-10">Add more</Button>
-      </section>
-
       {/* Recommended Section */}
       <section className="mb-8">
         <h2 className="text-2xl font-bold mb-4">Recommended</h2>
