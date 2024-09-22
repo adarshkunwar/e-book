@@ -7,47 +7,11 @@ import { getLocalStorage } from "@/lib/localstorage";
 import { cn } from "@/lib/utils";
 import { motion } from "framer-motion";
 import Link from "next/link";
-import { BiLibrary } from "react-icons/bi";
-import { CiBellOn, CiPen } from "react-icons/ci";
-import { GoGear, GoHome } from "react-icons/go";
+import { links } from "./sidebar-component";
 
 type SidebarDemoProps = {
   children: React.ReactNode;
 };
-
-type link = {
-  label: string;
-  icon: React.ReactNode;
-  href: string;
-};
-
-const links: link[] = [
-  {
-    label: "Dashboard",
-    icon: <GoHome />,
-    href: "/",
-  },
-  {
-    label: "Library",
-    icon: <BiLibrary />,
-    href: "/library",
-  },
-  {
-    label: "Write",
-    icon: <CiPen />,
-    href: "/write",
-  },
-  {
-    label: "Notification",
-    icon: <CiBellOn />,
-    href: "/notification",
-  },
-  {
-    label: "Settings",
-    icon: <GoGear />,
-    href: "/settings",
-  },
-];
 
 export default function SideBarFinal({ children }: SidebarDemoProps) {
   const [open, setOpen] = useState(false);

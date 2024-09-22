@@ -1,7 +1,7 @@
 import Left from "@/components/home/left";
 import Right from "@/components/home/right";
 
-const Page = async () => {
+const Page = () => {
   return (
     <div className=" h-full w-full grid grid-cols-12 gap-5">
       <div className="col-span-8">

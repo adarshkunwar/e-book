@@ -1,31 +1,37 @@
-import Link from "next/link";
-import { motion } from "framer-motion";
+import { BiLibrary } from "react-icons/bi";
+import { CiPen, CiBellOn } from "react-icons/ci";
+import { GoHome, GoGear } from "react-icons/go";
 
-export const Logo = () => {
-  return (
-    <Link
-      href="#"
-      className="font-normal flex space-x-2 items-center text-sm text-black py-1 relative z-20"
-    >
-      <div className="h-5 w-6 bg-black dark:bg-white rounded-br-lg rounded-tr-sm rounded-tl-lg rounded-bl-sm flex-shrink-0" />
-      <motion.span
-        initial={{ opacity: 0 }}
-        animate={{ opacity: 1 }}
-        className="font-medium text-black dark:text-white whitespace-pre"
-      >
-        Reader&apos;s Haven
-      </motion.span>
-    </Link>
-  );
+type link = {
+  label: string;
+  icon: React.ReactNode;
+  href: string;
 };
 
-export const LogoIcon = () => {
-  return (
-    <Link
-      href="#"
-      className="font-normal flex space-x-2 items-center text-sm text-black py-1 relative z-20"
-    >
-      <div className="h-5 w-6 bg-black dark:bg-white rounded-br-lg rounded-tr-sm rounded-tl-lg rounded-bl-sm flex-shrink-0" />
-    </Link>
-  );
-};
+export const links: link[] = [
+  {
+    label: "Dashboard",
+    icon: <GoHome />,
+    href: "/",
+  },
+  {
+    label: "Library",
+    icon: <BiLibrary />,
+    href: "/library",
+  },
+  {
+    label: "Write",
+    icon: <CiPen />,
+    href: "/write",
+  },
+  {
+    label: "Notification",
+    icon: <CiBellOn />,
+    href: "/notification",
+  },
+  {
+    label: "Settings",
+    icon: <GoGear />,
+    href: "/settings",
+  },
+];
