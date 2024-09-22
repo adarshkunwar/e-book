@@ -1,32 +1,20 @@
 import { NextRequest, NextResponse } from "next/server";
 import { writeFile } from "fs/promises";
 import prisma from "@/lib/prisma";
+import { bookSchema } from "./schema";
 import { z } from "zod";
 import path from "path";
 
 // Define the schema for validating the book data
-const bookSchema = z.object({
-  title: z.string().min(1),
-  genre: z.string().min(1),
-  data: z.string().optional(),
-});
 export async function GET() {
-  ///////////////////////////////////////////
-  // in case of using a backend
-  const users = await prisma.book.findMany();
-  const returnable = NextResponse.json(users);
-
-  ///////////////////////////////////////////
-  // in case of using a local data
-  // const returnable = NextResponse.json(books(10));
+  const books = await prisma.book.findMany();
+  const returnable = NextResponse.json(books);
 
   return returnable;
 }
 
 export async function POST(req: NextRequest) {
   try {
-    // Get the author ID from the headers
-    // Parse the form data
     const body = await req.formData();
     const formData = {
       title: body.get("title"),
@@ -36,15 +24,12 @@ export async function POST(req: NextRequest) {
     };
 
     const authorId = formData.authorId;
-
-    if (!authorId) {
+    if (!authorId)
       return NextResponse.json({ error: "No ID provided" }, { status: 400 });
-    }
 
     const author = await prisma.user.findUnique({
       where: { id: Number(authorId) },
     });
-
     if (!author) {
       return NextResponse.json({ error: "Author not found" }, { status: 404 });
     }
