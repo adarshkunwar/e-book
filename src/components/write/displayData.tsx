@@ -35,7 +35,11 @@ const DisplayData = async () => {
   return (
     <div className="flex flex-col gap-4">
       {data.map((ebook: TBook, index: number) => (
-        <SingleCardItem key={index} data={ebook} />
+        <SingleCardItem
+          key={index}
+          data={ebook}
+          link={`book/edit/${ebook.id}`}
+        />
       ))}
     </div>
   );

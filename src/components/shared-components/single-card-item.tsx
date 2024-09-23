@@ -1,16 +1,16 @@
 import { Capitalize } from "@/lib/filterName";
-import { cn } from "@/lib/utils";
 import { TBook } from "@/types/book";
 import Image from "next/image";
 import Link from "next/link";
 
 type SingleCardItemProps = {
   data: TBook;
+  link?: string;
 };
 
-export default function CardDemo({ data }: SingleCardItemProps) {
+export default function CardDemo({ data, link }: SingleCardItemProps) {
   return (
-    <Link href={`/book/${data.id}`}>
+    <Link href={link ? link : `/book/${data.id}`}>
       <div className="max-w-xs w-full group/card">
         <div
           className={
