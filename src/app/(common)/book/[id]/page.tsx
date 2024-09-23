@@ -2,7 +2,8 @@ import React from "react";
 import Image from "next/image";
 import { Capitalize } from "@/lib/filterName";
 import { Button } from "@/components/ui/button";
-import { TBook } from "@/types/book";
+import { TBook, TChapter } from "@/types/book";
+import Link from "next/link";
 
 type HomeProps = {
   params: {
@@ -59,13 +60,15 @@ const Home: React.FC<HomeProps> = async ({ params }) => {
               <strong className="block mb-2 text-xl font-semibold text-gray-800">
                 Total Chapters
               </strong>
-              {book.totalChapter}
+              {book.chapters
+                ? book.chapters?.length.toString()
+                : "No chapters added yet"}
             </div>
             <div className="text-md text-gray-700 mb-6">
               <strong className="block mb-2 text-xl font-semibold text-gray-800">
                 Published:
               </strong>
-              {new Date(book.published).toLocaleDateString()}
+              {new Date(book.publishedDate).toLocaleDateString()}
             </div>
             <div className="text-md text-gray-700">
               <strong className="block mb-2 text-xl font-semibold text-gray-800">
@@ -81,6 +84,27 @@ const Home: React.FC<HomeProps> = async ({ params }) => {
                   </li>
                 ))}
               </ul>
+            </div>
+            <div className="text-md text-gray-700">
+              {book.chapters && book.chapters.length > 0 && (
+                <>
+                  <strong className="block mb-2 text-xl font-semibold text-gray-800">
+                    Chapter:
+                  </strong>
+                  <ul className="list-disc list-inside pl-4">
+                    {book.chapters?.map((chapter: TChapter) => (
+                      <li
+                        key={chapter.id}
+                        className="transition-colors duration-300 hover:text-gray-800"
+                      >
+                        <Link href={`/book/${book.id}/chapters/${chapter.id}`}>
+                          {chapter.title}
+                        </Link>
+                      </li>
+                    ))}
+                  </ul>
+                </>
+              )}
             </div>
           </div>
         </div>

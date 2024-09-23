@@ -5,6 +5,12 @@ export type TAuthor = {
   email: string;
 };
 
+export type TChapter = {
+  id: string;
+  title: string;
+  content: string;
+};
+
 export type TBook = {
   id: string;
   title: string;
@@ -12,9 +18,9 @@ export type TBook = {
   data: string;
   coverImage: string;
   summary: string;
-  published: string;
+  publishedDate: string;
   genres: string[];
-  totalChapter: number;
+  chapters: TChapter[];
   currentChapter: number;
 };
 
