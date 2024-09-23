@@ -20,7 +20,7 @@ const Home: React.FC<HomeProps> = async ({ params }) => {
   return (
     <div className="relative pt-96">
       <section className="flex justify-center gap-5 absolute -translate-y-2/3 left-1/2 -translate-x-1/2">
-        <div className="w-full h-[500px] max-w-[300px] flex-1">
+        <div className="w-full h-[500px] max-w-[450px] flex-1">
           <Image
             src={`/uploads/${book.coverImage}`}
             alt={book.title}
@@ -35,13 +35,10 @@ const Home: React.FC<HomeProps> = async ({ params }) => {
           <h1 className="text-5xl font-serif font-light text-gray-900 tracking-tight transition-transform duration-300 transform hover:scale-105 hover:text-gray-700">
             {capitalizedTitle}
           </h1>
-          <h2 className="text-xl text-gray-600 mt-2 italic">
-            by {book.author?.firstName + " " + book.author?.lastName}
-          </h2>
           <h2 className="text-sm text-gray-600 mt-2 italic text-justify">
             {book.summary}
           </h2>
-          <Button className="w-fit px-10 rounded-full">Start Reading</Button>
+          <Button className="w-fit px-10 rounded-full">Add Chapters</Button>
         </header>
       </section>
       <div className="mx-auto container p-8 bg-white shadow-lg rounded-lg border border-gray-200 pt-40">

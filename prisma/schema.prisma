@@ -23,7 +23,6 @@ model chapter {
   content        String           @db.VarChar
   book           book             @relation(fields: [bookId], references: [id])
   bookId         Int
-  chapterNo      Int
   readingHistory readingHistory[] @relation("ChapterReadingHistory")
 }
 
