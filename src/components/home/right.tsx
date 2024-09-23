@@ -1,23 +1,19 @@
-"use client";
 import { getLastRead } from "@/data/lastRead";
 import Image from "next/image";
 import Link from "next/link";
 import { Button } from "../ui/button";
 import { getLocalStorage } from "@/lib/localstorage";
-import { useEffect, useState } from "react";
-const Right = () => {
+import { cookies } from "next/headers";
+
+const LastReading: React.FC = async () => {
   ///////////////////////////////////////////
   //data centers
-  const [last, setLast] = useState({});
-  const userName = `Adarsh Kunwar`;
 
-  useEffect(() => {
-    const fetchLastRead = async () => {
-      const lastRead = await getLastRead();
-      setLast(lastRead[0]);
-    };
-    fetchLastRead();
-  }, []);
+  const cookieStore = cookies(); // This works in server components
+  const id = cookieStore.get("id")?.value; // Get the cookie value
+  const res = await fetch(`http://localhost:3000/api/books/last-reading/${id}`);
+  const last = await res.json();
+  const userName = `Adarsh Kunwar`;
 
   ///////////////////////////////////////////
 
@@ -33,7 +29,7 @@ const Right = () => {
         </div>
         {
           // Last Reading Book
-          last == null || last == undefined ? (
+          last.data.length <= 0 ? (
             <div className="text-2xl font-bold text-center">
               <h1 className="">No Book Found</h1>
             </div>
@@ -82,4 +78,4 @@ const Right = () => {
   );
 };
 
-export default Right;
+export default LastReading;
