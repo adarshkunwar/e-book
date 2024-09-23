@@ -14,7 +14,7 @@ export async function GET(
 
   const data = await prisma.book.findUnique({
     where: { id: Number(id) },
-    include: { author: true },
+    include: { author: true, chapters: true },
   });
   if (!data) {
     return NextResponse.json({ error: "Book not found" }, { status: 404 });
