@@ -31,7 +31,7 @@ const LastReading: React.FC = async () => {
           // Last Reading Book
           last.data.length <= 0 ? (
             <div className="text-2xl font-bold text-center">
-              <h1 className="">No Book Found</h1>
+              <h1 className="">You havent read a book yet</h1>
             </div>
           ) : (
             <div>

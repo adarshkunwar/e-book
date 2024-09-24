@@ -1,3 +1,5 @@
+import Link from "next/link";
+
 export default function WrittenPageLayout({
   children,
 }: {
@@ -17,7 +19,7 @@ export default function WrittenPageLayout({
           <div className="flex items-center"></div>
           <div>
             <button className="bg-primary text-white px-4 py-2 rounded-lg">
-              Add New Book
+              <Link href="/write/book">Add New Book</Link>
             </button>
           </div>
         </div>

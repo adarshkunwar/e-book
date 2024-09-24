@@ -7,6 +7,7 @@ type TInputType =
   | "checkbox"
   | "radio"
   | "tel"
+  | "file"
   | "textarea";
 
 type TWidth = "full" | "half" | "third";
