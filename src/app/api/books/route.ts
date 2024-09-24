@@ -23,6 +23,7 @@ export async function POST(req: NextRequest) {
       authorId: body.get("authorId"),
     };
 
+    console.log("post");
     const authorId = formData.authorId;
     if (!authorId)
       return NextResponse.json({ error: "No ID provided" }, { status: 400 });
@@ -34,10 +35,7 @@ export async function POST(req: NextRequest) {
       return NextResponse.json({ error: "Author not found" }, { status: 404 });
     }
 
-    const bookData = bookSchema.parse({
-      ...formData,
-      data: formData.data ?? undefined,
-    });
+    const bookData = formData;
 
     // Process the file
     const file: File | null = body.get("coverImage") as unknown as File;

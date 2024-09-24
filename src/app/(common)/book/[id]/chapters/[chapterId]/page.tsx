@@ -1,8 +1,7 @@
 import React from "react";
-import Image from "next/image";
 import { Capitalize } from "@/lib/filterName";
 import { Button } from "@/components/ui/button";
-import { TBook, TChapter } from "@/types/book";
+import { TChapter } from "@/types/book";
 import Link from "next/link";
 
 type HomeProps = {
@@ -30,12 +29,10 @@ const Home: React.FC<HomeProps> = async ({ params }) => {
             {capitalizedTitle}
           </h1>
           <p className="text-gray-500 max-w-lg mx-auto font-light text-lg">
-            Explore the chapter and delve into the author's imagination.
+            Explore the chapter and delve into the author&apos;s imagination.
           </p>
-          <Link href={`/books/${params.id}`}>
-            <Button variant="primary" className="mt-4 px-6 py-2">
-              Back to Book
-            </Button>
+          <Link href={`/book/${params.id}`}>
+            <Button className="mt-4 px-6 py-2">Back to Book</Button>
           </Link>
         </header>
       </section>

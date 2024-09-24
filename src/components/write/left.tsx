@@ -1,6 +1,3 @@
-import { getLocalStorage } from "@/lib/localstorage";
-import { cookies } from "next/headers";
-import { Button } from "../ui/button";
 import DisplayData from "./displayData";
 
 const Left = async () => {

@@ -21,6 +21,7 @@ import {
 } from "@/model/book.model";
 import Link from "next/link";
 import { useState } from "react";
+import { getLocalStorage } from "@/lib/localstorage";
 
 export default function SignIn() {
   return (
@@ -32,11 +33,7 @@ export default function SignIn() {
 }
 
 const InputForm = () => {
-  const [files, setFiles] = useState<File[]>([]);
-  const handleFileUpload = (files: File[]) => {
-    setFiles(files);
-    console.log(files);
-  };
+  const id = getLocalStorage("id");
 
   const form = useForm<TRegiserFormSchema>({
     resolver: zodResolver(registerFormSchema),
@@ -46,28 +43,27 @@ const InputForm = () => {
   async function onSubmit(data: TRegiserFormSchema) {
     try {
       const formData = new FormData();
-
       formData.append("title", data.title);
       formData.append("genre", data.genre);
-      formData.append("authorId", data.authorId);
+      formData.append("authorId", id as string);
       formData.append("data", data.data);
-      formData.append("coverImage", files[0]);
+      formData.append("coverImage", data.coverImage);
 
-      const response = await fetch(`http://localhost:3000/write/book/`, {
+      const response = await fetch(`http://localhost:3000/api/books/`, {
         method: "POST",
         headers: {
-          "Content-Type": "application/json",
+          "Content-Type": "multipart/form-data",
         },
-        body: JSON.stringify(formData),
+        body: formData,
       });
 
       if (!response.ok) {
         const errorResponse = await response.json(); // Get the error details from the response
-        throw new Error(errorResponse.message || "Failed to login");
+        throw new Error(errorResponse.message || "Failed to Add books");
       }
 
       const responseData = await response.json(); // Parse the JSON response
-      toast.success("Logged in successfully!");
+      toast.success("Added Books successfully!");
       console.log(responseData);
     } catch (error) {
       console.error(error); // Log the actual error for debugging
@@ -80,9 +76,6 @@ const InputForm = () => {
         onSubmit={form.handleSubmit(onSubmit)}
         className="w-full grid grid-cols-12"
       >
-        <div className="w-full col-span-12 max-w-4xl mx-auto min-h-80 border border-dashed bg-white dark:bg-black border-neutral-200 dark:border-neutral-800 rounded-lg">
-          <FileUpload onChange={handleFileUpload} />
-        </div>
         {RegisterFormField.map((formField, index) => (
           <>
             <FormField

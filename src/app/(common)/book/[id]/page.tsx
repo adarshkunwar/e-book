@@ -42,7 +42,9 @@ const Home: React.FC<HomeProps> = async ({ params }) => {
           <h2 className="text-sm text-gray-600 mt-2 italic text-justify">
             {book.summary}
           </h2>
-          <Button className="w-fit px-10 rounded-full">Start Reading</Button>
+          <Link href={`/book/${params.id}/chapters/1`}>
+            <Button className="w-fit px-10 rounded-full">Start Reading</Button>
+          </Link>
         </header>
       </section>
       <div className="mx-auto container p-8 bg-white shadow-lg rounded-lg border border-gray-200 pt-40">

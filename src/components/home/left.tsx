@@ -1,11 +1,22 @@
 import SingleCardItem from "../shared-components/single-card-item";
 import { TBook } from "@/types/book";
 import { Button } from "../ui/button";
+import { cookies } from "next/headers";
+import toast from "react-hot-toast";
+import { redirect } from "next/navigation";
+import Link from "next/link";
 
 export default async function Left() {
   ///////////////////////////////////////////
   // data centers
-  const res = await fetch("http://localhost:3000/api/recommended");
+  const cookie = cookies();
+  const user = cookie.get("id");
+  if (!user) {
+    redirect("/login");
+  }
+  const res = await fetch(
+    `http://localhost:3000/api/books/recommended-for/${user}`,
+  );
   const data = await res.json();
   const userName = "Adarsh Kunwar";
   const quotes =
@@ -20,7 +31,9 @@ export default async function Left() {
           Happy reading, <br /> {userName.split(" ")[0]}
         </h1>
         <p className="text-lgj">{quotes}</p>
-        <Button className="mt-4 rounded-full px-10">Explore</Button>
+        <Link href="/library">
+          <Button className="mt-4 rounded-full px-10">Explore</Button>
+        </Link>
       </section>
 
       {/* Recommended Section */}
