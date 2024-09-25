@@ -20,7 +20,7 @@ import {
   TRegiserFormSchema,
 } from "@/model/book.model";
 import Link from "next/link";
-import { useState } from "react";
+import { ChangeEvent, useState } from "react";
 import { getLocalStorage } from "@/lib/localstorage";
 
 export default function SignIn() {
@@ -33,6 +33,7 @@ export default function SignIn() {
 }
 
 const InputForm = () => {
+  const [file, setFile] = useState<File | null>(null);
   const id = getLocalStorage("id");
 
   const form = useForm<TRegiserFormSchema>({
@@ -47,15 +48,13 @@ const InputForm = () => {
       formData.append("genre", data.genre);
       formData.append("authorId", id as string);
       formData.append("data", data.data);
-      formData.append("coverImage", data.coverImage);
+      formData.append("coverImage", file as File);
 
       const response = await fetch(`http://localhost:3000/api/books/`, {
         method: "POST",
-        headers: {
-          "Content-Type": "multipart/form-data",
-        },
         body: formData,
       });
+      console.log(await response.json());
 
       if (!response.ok) {
         const errorResponse = await response.json(); // Get the error details from the response
@@ -76,6 +75,16 @@ const InputForm = () => {
         onSubmit={form.handleSubmit(onSubmit)}
         className="w-full grid grid-cols-12"
       >
+        <div className="w-full col-span-12 max-w-4xl mx-auto min-h-80 border border-dashed bg-white dark:bg-black border-neutral-200 dark:border-neutral-800 rounded-lg">
+          <input
+            type="file"
+            id="coverImage"
+            name="coverImage"
+            onChange={(e: ChangeEvent<HTMLInputElement>) => {
+              setFile(e.target.files![0]);
+            }}
+          />
+        </div>
         {RegisterFormField.map((formField, index) => (
           <>
             <FormField

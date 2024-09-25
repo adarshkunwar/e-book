@@ -3,6 +3,7 @@ import { Capitalize } from "@/lib/filterName";
 import { Button } from "@/components/ui/button";
 import { TChapter } from "@/types/book";
 import Link from "next/link";
+import { notFound } from "next/navigation";
 
 type HomeProps = {
   params: {
@@ -11,13 +12,23 @@ type HomeProps = {
   };
 };
 
+async function fetchChapter(bookId: string, chapterId: string) {
+  const res = await fetch(
+    `http://localhost:3000/api/books/${bookId}/chapter/${chapterId}`,
+  );
+  if (!res.ok) return undefined;
+  return res.json();
+}
+
 const Home: React.FC<HomeProps> = async ({ params }) => {
   ///////////////////////////////////////////
   // DATA CENTER
-  const res = await fetch(
-    `http://localhost:3000/api/books/${params.id}/chapter/${params.chapterId}`,
-  );
-  const chapter = (await res.json()) as TChapter;
+  const chapter = await fetchChapter(params.id, params.chapterId);
+  console.log(chapter);
+  if (!chapter) {
+    notFound();
+  }
+  console.log(chapter);
   const capitalizedTitle = Capitalize(chapter.title);
 
   return (

@@ -23,7 +23,6 @@ export async function POST(req: NextRequest) {
       authorId: body.get("authorId"),
     };
 
-    console.log("post");
     const authorId = formData.authorId;
     if (!authorId)
       return NextResponse.json({ error: "No ID provided" }, { status: 400 });
@@ -38,18 +37,12 @@ export async function POST(req: NextRequest) {
     const bookData = formData;
 
     // Process the file
+
     const file: File | null = body.get("coverImage") as unknown as File;
+    console.log(file);
     if (!file) {
       return NextResponse.json(
         { success: false, error: "No file provided" },
-        { status: 400 },
-      );
-    }
-
-    // Ensure the file is an image (basic MIME type check)
-    if (!file.type.startsWith("image/")) {
-      return NextResponse.json(
-        { success: false, error: "Invalid file type, only images are allowed" },
         { status: 400 },
       );
     }
@@ -67,16 +60,18 @@ export async function POST(req: NextRequest) {
     // Create a new book entry with the current time as publishedDate
     const newBook = await prisma.book.create({
       data: {
-        title: bookData.title,
-        genre: bookData.genre,
+        title: bookData.title as string,
+        genre: bookData.genre as string,
         publishedDate: new Date(), // Automatically set to the current time
         lastUpdated: new Date(),
-        data: bookData.data ?? "Info about the book wasn't provided",
+        data:
+          (bookData.data as string) ?? "Info about the book wasn't provided",
         author: { connect: { id: Number(authorId) } },
         coverImage: file.name,
       },
     });
 
+    console.log(newBook);
     return NextResponse.json(newBook, { status: 201 });
   } catch (error) {
     if (error instanceof z.ZodError) {

@@ -9,6 +9,7 @@ export async function GET(
     const { id, chapterId } = params;
     const bookId = Number(id);
     const chapterIdNumber = Number(chapterId);
+    console.log(id, chapterId);
 
     if (isNaN(bookId) || isNaN(chapterIdNumber)) {
       return NextResponse.json(
@@ -19,14 +20,16 @@ export async function GET(
 
     const book = await prisma.book.findUnique({
       where: { id: bookId },
+      include: { chapters: true },
     });
     if (!book) {
       return NextResponse.json({ error: "Book not found" }, { status: 404 });
     }
 
-    const chapter = await prisma.chapter.findUnique({
-      where: { id: chapterIdNumber },
-    });
+    const chapter = book.chapters.find(
+      (chapter) => chapter.id === chapterIdNumber,
+    );
+
     if (!chapter) {
       return NextResponse.json({ error: "Chapter not found" }, { status: 404 });
     }
