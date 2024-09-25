@@ -61,7 +61,9 @@ const Home: React.FC<HomeProps> = async ({ params }) => {
 
       {/* Footer Section */}
       <footer className="mt-16 text-center text-gray-500">
-        <p className="text-sm">© 2024 Reader's Haven. All rights reserved.</p>
+        <p className="text-sm">
+          © 2024 Reader&apos;s Haven. All rights reserved.
+        </p>
       </footer>
     </div>
   );

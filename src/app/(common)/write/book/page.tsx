@@ -54,8 +54,6 @@ const InputForm = () => {
         method: "POST",
         body: formData,
       });
-      console.log(await response.json());
-
       if (!response.ok) {
         const errorResponse = await response.json(); // Get the error details from the response
         throw new Error(errorResponse.message || "Failed to Add books");
@@ -65,8 +63,7 @@ const InputForm = () => {
       toast.success("Added Books successfully!");
       console.log(responseData);
     } catch (error) {
-      console.error(error); // Log the actual error for debugging
-      toast.error("Could not add books", error || "An error occurred");
+      console.error("Hello error" + error); // Log the actual error for debugging
     }
   }
   return (
@@ -85,36 +82,36 @@ const InputForm = () => {
             }}
           />
         </div>
+
         {RegisterFormField.map((formField, index) => (
-          <>
-            <FormField
-              key={index}
-              control={form.control}
-              name={formField.name}
-              render={({ field }) => (
-                <FormItem
-                  className={`${
-                    formField.width === "full" && "col-span-12"
-                  } ${formField.width === "half" && "col-span-6"} ${
-                    formField.width === "third" && "col-span-4"
-                  } px-4 py-2`}
-                >
-                  <FormLabel>{formField.label}</FormLabel>
-                  <FormControl>
-                    <Input
-                      type={formField.type}
-                      placeholder={formField.placeholder}
-                      required={formField.required}
-                      aria-label={formField.label}
-                      {...field}
-                    />
-                  </FormControl>
-                  <FormMessage />
-                </FormItem>
-              )}
-            />
-          </>
+          <FormField
+            key={index}
+            control={form.control}
+            name={formField.name}
+            render={({ field }) => (
+              <FormItem
+                className={`${
+                  formField.width === "full" && "col-span-12"
+                } ${formField.width === "half" && "col-span-6"} ${
+                  formField.width === "third" && "col-span-4"
+                } px-4 py-2`}
+              >
+                <FormLabel>{formField.label}</FormLabel>
+                <FormControl>
+                  <Input
+                    type={formField.type}
+                    placeholder={formField.placeholder}
+                    required={formField.required}
+                    aria-label={formField.label}
+                    {...field}
+                  />
+                </FormControl>
+                <FormMessage />
+              </FormItem>
+            )}
+          />
         ))}
+
         <div className="col-span-12 flex justify-end w-full px-4 py-2">
           <Button type="submit" className="px-4 py-2 w-full">
             Submit
