@@ -1,10 +1,12 @@
 "use client";
 import { Button } from "@/components/ui/button";
 import { Capitalize } from "@/lib/filterName";
-import { TBook } from "@/types/book";
+import { TBook, TChapter } from "@/types/book";
 import Image from "next/image";
+import Link from "next/link";
 import React, { useEffect, useState } from "react";
 import toast from "react-hot-toast";
+import { FaEdit, FaTrashAlt } from "react-icons/fa";
 import { FaRegTrashCan } from "react-icons/fa6";
 
 type HomeProps = {
@@ -105,7 +107,25 @@ const Home: React.FC<HomeProps> = ({ params }) => {
                         style={{ objectFit: "cover", objectPosition: "center" }}
                     />
                 </div>
-                <header className="text-center mb-12 pt-10 flex-1 flex flex-col gap-10">
+
+                <header className="text-center mb-12 flex-1 flex flex-col gap-10">
+                    <div className="flex w-full justify-end gap-2">
+                        <Button
+                            className="w-fit px-4 rounded-full bg-red-600 flex gap-2"
+                            onClick={handleDelete}
+                        >
+                            <FaRegTrashCan />
+                        </Button>
+
+                        <Button
+                            className="w-fit px-4 rounded-full bg-blue-600 flex gap-2"
+                            onClick={handleDelete}
+                        >
+                            <Link href="/write/book">
+                                <FaEdit />
+                            </Link>
+                        </Button>
+                    </div>
                     <h1 className="text-5xl font-serif font-light text-gray-900 tracking-tight transition-transform duration-300 transform hover:scale-105 hover:text-gray-700">
                         {capitalizedTitle}
                     </h1>
@@ -114,7 +134,9 @@ const Home: React.FC<HomeProps> = ({ params }) => {
                     </h2>
                     <div className="flex gap-4">
                         <Button className="w-fit px-10 rounded-full">
-                            Add Chapters
+                            <Link href={`/book/edit/${params.id}/chapters`}>
+                                Add Chapters
+                            </Link>
                         </Button>
                         <Button
                             className="w-fit px-4 rounded-full bg-red-600"
@@ -150,17 +172,28 @@ const Home: React.FC<HomeProps> = ({ params }) => {
                         </div>
                         <div className="text-md text-gray-700">
                             <strong className="block mb-2 text-xl font-semibold text-gray-800">
-                                Genres:
+                                Chapters:
                             </strong>
-                            <ul className="list-disc list-inside pl-4">
-                                {book.genres?.map((genre: string) => (
-                                    <li
-                                        key={genre}
-                                        className="transition-colors duration-300 hover:text-gray-800"
-                                    >
-                                        {genre}
-                                    </li>
-                                ))}
+                            <ul className="list-none pl-4 flex flex-col gap-2">
+                                {book.chapters?.map(
+                                    (chapter: TChapter, index: number) => (
+                                        <li
+                                            key={index}
+                                            className="px-2 py-2 transition-colors duration-300 hover:text-gray-800 flex justify-between items-center border border-black rounded-lg"
+                                        >
+                                            {chapter.title}
+
+                                            <div className="flex justify-end gap-2 ">
+                                                <Button className="flex items-center bg-green-100 text-indigo-600 hover:bg-indigo-100 transition duration-200">
+                                                    <FaEdit className="" />
+                                                </Button>
+                                                <Button className="flex items-center bg-yellow-300 text-red-600 hover:bg-red-100 transition duration-200">
+                                                    <FaTrashAlt className="" />
+                                                </Button>
+                                            </div>
+                                        </li>
+                                    ),
+                                )}
                             </ul>
                         </div>
                     </div>
