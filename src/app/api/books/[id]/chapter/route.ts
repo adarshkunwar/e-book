@@ -4,15 +4,33 @@ import { chapter } from "./schema";
 import { z } from "zod";
 
 // get all users
-export async function GET(req: NextRequest) {
+export async function GET(
+  req: NextRequest,
+  { params }: { params: { id: string } },
+) {
   try {
-    const chapters = await prisma.chapter.findMany();
-    return NextResponse.json(chapters);
+    const bookId = Number(params.id);
+    if (!bookId)
+      return NextResponse.json({ error: "No ID provided" }, { status: 400 });
+
+    console.log("hi");
+    // find book and check if it exists.
+    const book = await prisma.book.findUnique({
+      where: { id: bookId },
+      include: { chapters: true },
+    });
+    if (!book)
+      return NextResponse.json({ error: "Book not found" }, { status: 404 });
+
+    // create a new chapter and connect it to the book
+
+    const chapters = book.chapters;
+
+    return NextResponse.json(chapters, { status: 200 });
   } catch (error) {
-    console.error("Error processing request:", error);
     return NextResponse.json(
-      { error: "Internal Server Error" },
-      { status: 500 },
+      { error: "Something went wrong while fetching the chapters data" },
+      { status: 400 },
     );
   }
 }
