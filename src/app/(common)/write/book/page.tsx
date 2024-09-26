@@ -70,9 +70,9 @@ const InputForm = () => {
     <Form {...form}>
       <form
         onSubmit={form.handleSubmit(onSubmit)}
-        className="w-full grid grid-cols-12"
+        className="w-full grid grid-cols-12 max-w-4xl"
       >
-        <div className="w-full col-span-12 max-w-4xl mx-auto min-h-80 border border-dashed bg-white dark:bg-black border-neutral-200 dark:border-neutral-800 rounded-lg">
+        <div className="col-span-12 flex justify-start w-full px-4 py-2">
           <input
             type="file"
             id="coverImage"

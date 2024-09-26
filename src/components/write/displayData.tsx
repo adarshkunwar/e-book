@@ -2,6 +2,17 @@ import SingleCardItem from "../shared-components/single-card-item";
 import { TBook } from "@/types/book";
 import { getLocalStorage } from "@/lib/localstorage";
 import { cookies } from "next/headers";
+import Scrollable from "../shared-components/scrollable";
+
+const getCookie = () => {
+  const cookieStore = cookies(); // This works in server components
+  const id = cookieStore.get("id")?.value; // Get the cookie value
+  if (!id) {
+    console.log("No ID cookie found.");
+    return null;
+  }
+  return id;
+};
 
 const DisplayData = async () => {
   const cookieStore = cookies(); // This works in server components
@@ -33,15 +44,17 @@ const DisplayData = async () => {
   }
 
   return (
-    <div className="flex flex-col gap-4">
-      {data.map((ebook: TBook, index: number) => (
-        <SingleCardItem
-          key={index}
-          data={ebook}
-          link={`book/edit/${ebook.id}`}
-        />
-      ))}
-    </div>
+    <Scrollable>
+      <div className="grid grid-cols-1 sm:grid-cols-2 lg:grid-cols-6 gap-4">
+        {data.map((ebook: TBook, index: number) => (
+          <SingleCardItem
+            key={index}
+            data={ebook}
+            link={`book/edit/${ebook.id}`}
+          />
+        ))}
+      </div>
+    </Scrollable>
   );
 };
 

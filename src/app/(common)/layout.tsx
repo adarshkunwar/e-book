@@ -18,9 +18,9 @@ export default function RootLayout({
   children: React.ReactNode;
 }>) {
   return (
-    <section>
+    <div className="overflow-scroll  ">
       <SideBarFinal>{children}</SideBarFinal>
       <Toaster position="top-center" reverseOrder={false} />
-    </section>
+    </div>
   );
 }
