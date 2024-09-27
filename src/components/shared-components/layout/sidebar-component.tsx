@@ -24,14 +24,4 @@ export const links: link[] = [
     icon: <CiPen />,
     href: "/write",
   },
-  {
-    label: "Notification",
-    icon: <CiBellOn />,
-    href: "/notification",
-  },
-  {
-    label: "Settings",
-    icon: <GoGear />,
-    href: "/settings",
-  },
 ];
