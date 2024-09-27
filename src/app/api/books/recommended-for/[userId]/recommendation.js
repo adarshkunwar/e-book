@@ -37,8 +37,8 @@ function vectorizeBook(book) {
 // Function to get recommendations for a user
 export async function getRecommendationsForUser(userId) {
   const readBooks = await prisma.readingHistory.findMany({
-    where: { userId },
-    include: { book: true },
+    where: { userId: userId },
+    include: { book: true, chapter: true, user: true },
   });
 
   const allBooks = await prisma.book.findMany(); // Get all books
@@ -56,11 +56,10 @@ export async function getRecommendationsForUser(userId) {
       return { book, similarity }; // Return the book and its similarity score
     })
     .sort((a, b) => b.similarity - a.similarity) // Sort by similarity in descending order
-    .slice(0, 5); // Return top 5 recommendations
+    .slice(0, 4); // Return top 5 recommendations
 }
 
 // Example usage of getRecommendationsForUser
 (async () => {
   const recommendations = await getRecommendationsForUser(1); // Example user ID
-  console.log(recommendations);
 })();
