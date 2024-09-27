@@ -27,15 +27,13 @@ model chapter {
 }
 
 model readingHistory {
-  id        Int      @id @default(autoincrement())
-  user      user     @relation("ChapterReadingHistory", fields: [userId], references: [id])
+  id        Int     @id @default(autoincrement())
+  user      user    @relation("ChapterReadingHistory", fields: [userId], references: [id])
   userId    Int
-  book      book     @relation(fields: [bookId], references: [id])
+  book      book    @relation(fields: [bookId], references: [id])
   bookId    Int
-  chapter   chapter  @relation("ChapterReadingHistory", fields: [chapterId], references: [id])
+  chapter   chapter @relation("ChapterReadingHistory", fields: [chapterId], references: [id])
   chapterId Int
-  lastRead  DateTime @db.Timestamp(6)
-  lastPage  Int
 }
 
 model book {

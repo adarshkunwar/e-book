@@ -64,7 +64,6 @@ const InputForm = () => {
       setLocalStorage("id", responseData.data.id);
       document.cookie = `id=${responseData.data.id}; path=/;`;
       toast.success("Logged in successfully!");
-      console.log(responseData);
       router.push("/"); // Use router.push for client-side navigation
     } catch (error) {
       console.error(error); // Log the actual error for debugging

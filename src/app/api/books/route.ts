@@ -39,7 +39,6 @@ export async function POST(req: NextRequest) {
     // Process the file
 
     const file: File | null = body.get("coverImage") as unknown as File;
-    console.log(file);
     if (!file) {
       return NextResponse.json(
         { success: false, error: "No file provided" },
@@ -71,7 +70,6 @@ export async function POST(req: NextRequest) {
       },
     });
 
-    console.log(newBook);
     return NextResponse.json(newBook, { status: 201 });
   } catch (error) {
     if (error instanceof z.ZodError) {

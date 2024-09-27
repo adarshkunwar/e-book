@@ -61,7 +61,6 @@ const InputForm = () => {
 
       const responseData = await response.json(); // Parse the JSON response
       toast.success("Added Books successfully!");
-      console.log(responseData);
     } catch (error) {
       console.error("Hello error" + error); // Log the actual error for debugging
     }

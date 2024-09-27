@@ -24,11 +24,9 @@ const Home: React.FC<HomeProps> = async ({ params }) => {
   ///////////////////////////////////////////
   // DATA CENTER
   const chapter = await fetchChapter(params.id, params.chapterId);
-  console.log(chapter);
   if (!chapter) {
     notFound();
   }
-  console.log(chapter);
   const capitalizedTitle = Capitalize(chapter.title);
 
   return (

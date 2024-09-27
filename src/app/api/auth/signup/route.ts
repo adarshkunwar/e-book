@@ -10,7 +10,6 @@ export async function GET(req: NextRequest) {
 export async function POST(req: NextRequest) {
   try {
     const newdata = await req.json();
-    console.log(newdata);
 
     // Create new user
     const newUser = await prisma.user.create({

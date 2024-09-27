@@ -8,8 +8,6 @@ export async function GET(req: NextRequest) {
   const headersList = headers();
   const id = headersList.get("id");
 
-  console.log("---------------------------------------");
-
   if (isNaN(Number(id))) {
     return NextResponse.json({ error: "Invalid user ID" }, { status: 400 });
   }
@@ -22,7 +20,6 @@ export async function GET(req: NextRequest) {
   if (!author) {
     return NextResponse.json({ error: "Author not found" }, { status: 404 });
   }
-  console.log(author);
   // return NextResponse.json("hi", { status: 100 });
   return NextResponse.json(author.read, { status: 200 });
   // const { userId } = req.query;

@@ -1,9 +1,17 @@
 import prisma from "@/lib/prisma";
 import { NextRequest, NextResponse } from "next/server";
-
-export async function GET(req: NextRequest, res: NextResponse) {
-  const books = await prisma.book.findMany({ include: { author: true } });
-  const returnable = NextResponse.json(books.filter((book) => book.id < 5));
-
-  return returnable;
+import { getRecommendationsForUser } from "./recommendation";
+export async function GET(
+  req: NextRequest,
+  { params }: { params: { userId: string } },
+) {
+  const user = params.userId;
+  console.log(user);
+  if (!user) {
+    return NextResponse.json({ error: "User not found" }, { status: 404 });
+  }
+  console.log("Getting recommendations for user ---------------");
+  const recommendedBooks = await getRecommendationsForUser(Number(user));
+  console.log(recommendedBooks);
+  return NextResponse.json(recommendedBooks);
 }

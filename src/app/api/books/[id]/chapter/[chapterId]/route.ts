@@ -9,7 +9,6 @@ export async function GET(
     const { id, chapterId } = params;
     const bookId = Number(id);
     const chapterIdNumber = Number(chapterId);
-    console.log(id, chapterId);
 
     if (isNaN(bookId) || isNaN(chapterIdNumber)) {
       return NextResponse.json(

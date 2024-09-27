@@ -13,7 +13,6 @@ export async function GET(
     if (!bookId)
       return NextResponse.json({ error: "No ID provided" }, { status: 400 });
 
-    console.log("hi");
     // find book and check if it exists.
     const book = await prisma.book.findUnique({
       where: { id: bookId },
