@@ -36,15 +36,9 @@ export default function CardDemo({ data, link }: SingleCardItemProps) {
             )}
           </div>
           <div className="flex flex-row items-center space-x-4 z-10">
-            <div>
-              <div className="border border-white w-8 h-8 rounded-full flex items-center justify-center text-black">
-                {Capitalize(data?.author?.firstName[0])}
-              </div>
-            </div>
+            <div></div>
             <div className="flex flex-col">
-              <p className="font-normal text-base text-gray-50 relative z-10">
-                {data?.author?.firstName + " " + data?.author?.lastName}
-              </p>
+              <p className="font-normal text-base text-gray-50 relative z-10"></p>
             </div>
           </div>
           <div className="text content">

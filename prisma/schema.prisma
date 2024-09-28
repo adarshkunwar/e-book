@@ -21,7 +21,7 @@ model chapter {
   id             Int              @id @default(autoincrement())
   title          String           @db.VarChar
   content        String           @db.VarChar
-  book           book             @relation(fields: [bookId], references: [id])
+  book           book             @relation(fields: [bookId], references: [id], onDelete: Cascade)
   bookId         Int
   readingHistory readingHistory[] @relation("ChapterReadingHistory")
 }

@@ -4,6 +4,8 @@ import { Button } from "@/components/ui/button";
 import { TChapter } from "@/types/book";
 import Link from "next/link";
 import { notFound } from "next/navigation";
+import { cookies } from "next/headers";
+import { redirect } from "next/navigation";
 
 type HomeProps = {
   params: {
@@ -20,10 +22,39 @@ async function fetchChapter(bookId: string, chapterId: string) {
   return res.json();
 }
 
+async function addBook(bookId: string, chapterId: string, userId: string) {
+  const res = await fetch(
+    `http://localhost:3000/api/reading-history/history-for/${userId}`,
+    {
+      method: "POST",
+      headers: {
+        "Content-Type": "application/json",
+      },
+      body: JSON.stringify({
+        book: bookId,
+        chapter: chapterId,
+        user: userId,
+      }),
+    },
+  );
+  if (!res.ok) return undefined;
+  return res.json();
+}
+
 const Home: React.FC<HomeProps> = async ({ params }) => {
   ///////////////////////////////////////////
   // DATA CENTER
+  const cookieStore = cookies(); // This works in server components
+  const userId = cookieStore.get("id")?.value; // Get the cookie value
+  if (!userId) {
+    redirect("/login");
+  }
   const chapter = await fetchChapter(params.id, params.chapterId);
+  const updatedChapter = await addBook(
+    params.id,
+    params.chapterId,
+    userId as string,
+  );
   if (!chapter) {
     notFound();
   }

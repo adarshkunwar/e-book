@@ -106,14 +106,26 @@ export async function DELETE(
       return NextResponse.json({ error: "Book not found" }, { status: 404 });
     }
 
+    await prisma.readingHistory.deleteMany({
+      where: { bookId: Number(id) },
+    });
+
+    // Delete all related chapters first
+    await prisma.chapter.deleteMany({
+      where: { bookId: Number(id) },
+    });
+
+    // Now delete the book
     const deletedBook = await prisma.book.delete({
       where: { id: Number(id) },
     });
+
     return NextResponse.json(deletedBook, { status: 200 });
   } catch (error) {
+    console.error(error); // Log the error for debugging
     return NextResponse.json(
-      { error: "Some Error Occured while deleting the book" },
-      { status: 404 },
+      { error: "Some error occurred while deleting the book" },
+      { status: 500 }, // Use 500 for server error
     );
   }
 }
