@@ -1,62 +1,77 @@
-import { Button } from "@/components/ui/button";
-import { TChapter } from "@/types/book";
-import Link from "next/link";
-import { FaEdit, FaTrashAlt } from "react-icons/fa"; // Importing React Icons
+"use client";
+import { redirect } from "next/navigation";
+// components/ChapterForm.js
 
-const getChapters = async (id: string) => {
+import { FormEvent, useState } from "react";
+import toast from "react-hot-toast";
+
+const ChapterForm = ({ params }: { params: { id: string } }) => {
+  const [title, setTitle] = useState("");
+  const [content, setContent] = useState("");
+  const bookId = params.id;
+
+  const handleSubmit = async (e: FormEvent<HTMLFormElement>) => {
+    e.preventDefault();
+
     const response = await fetch(
-        `http://localhost:3000/api/books/${id}/chapter/`,
+      `http://localhost:3000/api/books/${bookId}/chapter`,
+      {
+        method: "POST",
+        headers: {
+          "Content-Type": "application/json",
+        },
+        body: JSON.stringify({
+          title,
+          content,
+        }),
+      },
     );
-    const data = await response.json();
-    return data;
+
+    if (response.ok) {
+      const data = await response.json();
+      toast.success("Chapter successfully added");
+    } else {
+      console.error("Error:", response.statusText);
+      toast.error("Chapter could not be added");
+    }
+  };
+
+  return (
+    <form
+      onSubmit={(e) => handleSubmit(e)}
+      className=" p-4 border rounded-lg shadow-lg"
+    >
+      <h2 className="text-xl font-semibold mb-4">Add Chapter</h2>
+      <div className="mb-4">
+        <label className="block text-sm font-medium text-gray-700">Title</label>
+        <input
+          type="text"
+          value={title}
+          onChange={(e) => setTitle(e.target.value)}
+          required
+          className="mt-1 block w-full border border-gray-300 rounded-md shadow-sm p-2 focus:border-blue-500 focus:ring focus:ring-blue-200"
+        />
+      </div>
+      <div className="mb-4">
+        <label className="block text-sm font-medium text-gray-700">
+          Content
+        </label>
+        <textarea
+          value={content}
+          onChange={(e) => setContent(e.target.value)}
+          required
+          className="mt-1 block w-full border border-gray-300 rounded-md shadow-sm p-2 focus:border-blue-500 focus:ring focus:ring-blue-200"
+          rows={20}
+        />
+      </div>
+      <button
+        type="submit"
+        className="w-full bg-blue-600 text-white font-semibold py-2 rounded-md hover:bg-blue-500 transition duration-200"
+      >
+        Submit
+      </button>
+    </form>
+  );
 };
 
-const Chapters = async ({
-    params,
-}: {
-    params: {
-        id: string;
-    };
-}) => {
-    const bookId = params.id;
-    const chapters = await getChapters(bookId);
-
-    return (
-        <div className="container mx-auto px-4 py-8">
-            <h2 className="text-4xl font-bold text-gray-800 mb-8 text-center">
-                Chapters List
-            </h2>
-
-            <ul className="grid grid-cols-1 sm:grid-cols-2 md:grid-cols-3 gap-6">
-                {chapters.map((chapter: TChapter, index: number) => (
-                    <li
-                        key={index}
-                        className="bg-white shadow-lg rounded-lg p-6 transition-transform duration-300 transform hover:scale-105"
-                    >
-                        <Link
-                            href={`/chapter/${chapter.id}`}
-                            className="block text-lg font-semibold text-gray-900 hover:text-indigo-600"
-                        >
-                            <h3 className="text-2xl font-medium mb-3">
-                                {chapter.title}
-                            </h3>
-                        </Link>
-
-                        <div className="flex justify-end gap-2 mt-4">
-                            <Button className="flex items-center bg-green-100 text-indigo-600 hover:bg-indigo-100 transition duration-200">
-                                <FaEdit className="mr-2" />
-                                Update
-                            </Button>
-                            <Button className="flex items-center bg-yellow-300 text-red-600 hover:bg-red-100 transition duration-200">
-                                <FaTrashAlt className="mr-2" />
-                                Delete
-                            </Button>
-                        </div>
-                    </li>
-                ))}
-            </ul>
-        </div>
-    );
-};
-
-export default Chapters;
+export default ChapterForm;

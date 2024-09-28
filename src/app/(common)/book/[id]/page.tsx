@@ -17,6 +17,7 @@ const Home: React.FC<HomeProps> = async ({ params }) => {
   const res = await fetch(`http://localhost:3000/api/books/${params.id}`);
   const book = (await res.json()) as TBook;
   const capitalizedTitle = Capitalize(book.title);
+  const chapters = book?.chapters;
 
   return (
     <div className="relative pt-96">
@@ -46,7 +47,9 @@ const Home: React.FC<HomeProps> = async ({ params }) => {
             className="w-fit px-10 rounded-full"
             disabled={book.chapters?.length === 0}
           >
-            <Link href={`/book/${params.id}/chapters/1`}>Start Reading</Link>
+            <Link href={`/book/${params.id}/chapters/${chapters[0].id}`}>
+              Start Reading
+            </Link>
           </Button>
         </header>
       </section>

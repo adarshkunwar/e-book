@@ -59,7 +59,6 @@ const Home: React.FC<HomeProps> = async ({ params }) => {
     notFound();
   }
   const capitalizedTitle = Capitalize(chapter.title);
-
   return (
     <div className="relative pt-28 bg-gray-50 min-h-screen">
       {/* Header Section */}
